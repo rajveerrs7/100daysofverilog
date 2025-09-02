@@ -1,0 +1,8 @@
+`timescale 1ns / 1ps
+module DAY8HALFSUBSTRACTOR(
+input a,b,
+output out,cout
+    );
+    assign out=a^b;
+    assign cout=~a&b;
+endmodule

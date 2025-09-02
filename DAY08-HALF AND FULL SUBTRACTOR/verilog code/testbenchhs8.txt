@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out,cout;
+    reg clk;
+    DAY8HALFSUBSTRACTOR DUT(a,b,out,cout);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=0; b=0;
+    #10 a=0; b=1;
+    #10 a=1; b=0;
+    #10 a=1; b=1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY8HALFSUBSTRACTOR.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,out:%b,cout:%b",a,b,out,cout);
+    end
+endmodule
