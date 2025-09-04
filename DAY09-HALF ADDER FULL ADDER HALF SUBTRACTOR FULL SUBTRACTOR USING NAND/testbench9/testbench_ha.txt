@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    A);
+    reg a,b;
+    wire sum,cout;
+    DAY9HAFAHSFS_NAND DUT(a,b,sum,cout);
+    initial begin
+    #10 a=1'b0;b=1'b0;
+    #10 a=1'b0;b=1'b1;
+    #10 a=1'b1;b=1'b0;
+    #10 a=1'b1;b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY9HAFAHSFS_NAND.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,sum:%b,cout:%b",a,b,sum,cout);
+    end
+endmodule
