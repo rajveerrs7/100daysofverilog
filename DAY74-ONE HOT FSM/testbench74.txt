@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,reset;
+    wire [1:0]out;
+    wire [3:0]state;
+    DAY74FSM DUT(clk, reset, state, out);
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    end
+    initial begin
+    reset = 1'b1;
+    #10;
+    reset = 1'b0;
+    #200 $finish;
+    end
+    initial begin
+    $dumpfile("DAY74FSM.vcd");
+    $dumpvars(0,tb);
+    end
+endmodule

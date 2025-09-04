@@ -1,0 +1,28 @@
+`timescale 1ns / 1ps
+
+module DAY86PALLINDROME_CHECK(
+    input [15:0]a,
+    output reg pallindrome
+    );
+    
+    always @(a)
+        pallindrome <= check_pallindrome(a);
+    
+    function check_pallindrome;
+        input [15:0]in;
+        reg [15:0]temp_in;
+        reg [15:0]reverse_in;
+        reg [15:0]last_digit;
+        begin
+            temp_in = in;
+            reverse_in = 0;
+            while(temp_in > 0)
+            begin
+                last_digit = temp_in%10;
+                reverse_in = (reverse_in*10)+last_digit;
+                temp_in = temp_in/10;
+            end
+            check_pallindrome = (reverse_in == in)? 1'b1 : 1'b0;
+        end
+    endfunction
+endmodule

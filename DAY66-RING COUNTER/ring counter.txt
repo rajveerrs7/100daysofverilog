@@ -1,0 +1,12 @@
+`timescale 1ns / 1ps
+
+module DAY66RINGCOUNTER(
+    input clk,reset,
+    output reg [3:0]counter
+    );
+    always @(posedge clk)
+    if(reset)
+        counter <= 4'b0001;
+    else
+        counter <= {counter[0],counter[3:1]};
+endmodule

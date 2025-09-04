@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module DAY46SYNCASYNCRESET(
+    input clk,reset,in,
+    output reg sync_out,async_out
+    );
+    always @(posedge clk)
+        begin
+            if(reset)
+                sync_out<=1'b0;
+            else
+                sync_out<=in;
+        end
+    always @(posedge clk or posedge reset)
+        begin 
+            if(reset)
+                async_out<=1'b0;
+            else
+                async_out<=in;
+        end
+endmodule

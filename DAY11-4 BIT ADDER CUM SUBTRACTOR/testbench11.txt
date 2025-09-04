@@ -1,0 +1,25 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]a,b;
+    reg cin;
+    wire [3:0]out;
+    wire cout;
+    reg clk;
+    DAY11ADDERSUBTRACTOR DUT(a,b,cin,out,cout);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1; b=3;cin=0;
+    #10 a=5; b=1;cin=1;
+    #10 a=4; b=3;cin=0;
+    #10 a=1; b=1;cin=1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY11ADDERSUBTRACTOR.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,b:%d,cin:%b,out:%d,cout:%b",a,b,cin,out,cout);
+    end
+endmodule

@@ -1,0 +1,8 @@
+`timescale 1ns / 1ps
+module DAY24DEMUX1x2(
+input a,sel,
+output [1:0]out
+    );
+    assign out[0]=sel?1'b0:a;
+    assign out[1]=sel?a:1'b0;
+endmodule

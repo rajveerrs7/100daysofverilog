@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,sel;
+    wire [1:0]out;
+    reg clk;
+    DAY24DEMUX1x2 DUT(a,sel,out);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1'b0; sel=1'b0;
+    #10 a=1'b0; sel=1'b1;
+    #10 a=1'b1; sel=1'b0;
+    #10 a=1'b1; sel=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY24DEMUX1x2.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,sel:%b,out:%b",a,sel,out);
+    end
+endmodule

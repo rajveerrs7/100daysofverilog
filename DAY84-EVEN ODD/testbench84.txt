@@ -1,0 +1,27 @@
+`timescale 1ns / 1ps
+module tb();
+    reg [3:0]number;
+    wire even_odd;
+    DAY84EVEN_ODD dut(number,even_odd);
+    
+    initial begin
+      number=4'd6;
+      #10;
+      number=4'd3;
+      #10;
+      number=4'd14;
+      #10;
+      number=4'd10;
+      #10;
+      number=4'd11;
+      #10;
+      number=4'd7;
+      #10;
+      $finish;
+    end
+    initial begin
+    $dumpfile("DAY84EVEN_ODD.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"number:%d, even_odd:%b",number, even_odd);
+    end
+endmodule

@@ -1,0 +1,44 @@
+`timescale 1ns / 1ps
+
+
+module tb();
+
+    parameter width = 8, depth = 16;
+    
+    reg clk, rst, rd_en, wr_en;
+    reg [width-1:0]data_in;
+    
+    wire [width-1:0]data_out;
+    wire empty, full;
+    
+    FIFO dut(clk, rst, rd_en, wr_en, data_in, data_out, empty, full);
+    
+    always #5 clk = ~clk;
+    
+    initial begin
+            clk = 1'b0;
+            rst = 1'b1;
+        #10 rst = 1'b0;
+        
+        #10 data_in = 8'd5; rd_en = 1'b0; wr_en = 1'b1;
+        #10 data_in = 8'd6; rd_en = 1'b0; wr_en = 1'b1;
+        #10 data_in = 8'd7; rd_en = 1'b0; wr_en = 1'b1;
+        #10 data_in = 8'd8; rd_en = 1'b0; wr_en = 1'b1;
+        #10 data_in = 8'd9; rd_en = 1'b0; wr_en = 1'b1;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        
+        #10 $finish;
+    end
+    
+    initial begin
+        $dumpfile("FIFO.vcd");
+        $dumpvars(0, tb);
+        $monitor("rd_en:%b, wr_en:%b, data_in:%d, data_out:%d, empty:%b, full:%b",rd_en, wr_en, data_in, data_out, empty, full);
+    end
+
+endmodule

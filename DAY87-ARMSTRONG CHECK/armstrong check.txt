@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+
+module DAY87ARMSTRONG_NUMBER(
+    input [8:0]a,
+    output reg armstrong
+    );
+    
+    always @(a)
+        armstrong <= check_armstrong(a);
+    
+    function check_armstrong;
+        input [8:0]in;
+        reg [8:0]temp_in;
+        reg [8:0]remainder;
+        reg [8:0]result;
+        begin
+            temp_in = in;
+            result = 0;
+            remainder = 0;
+            while(temp_in > 0)
+            begin
+                remainder = temp_in%10;
+                result = result + (remainder*remainder*remainder);
+                temp_in = temp_in/10;
+            end
+            check_armstrong = (result == in)? 1'b1 : 1'b0;
+        end
+    endfunction
+endmodule

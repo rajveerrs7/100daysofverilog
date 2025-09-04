@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg en,reset,d,clk;
+    wire q;
+    DAY49DFLIPFLOP DUT(en,reset,d,clk,q);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 d=1'b0;reset=1'b0;en=1'b1;
+    #10 d=1'b1;reset=1'b1;en=1'b0;
+    #10 d=1'b0;reset=1'b0;en=1'b1;
+    #10 d=1'b1;reset=1'b0;en=1'b1;
+    #10 d=1'b0;reset=1'b0;en=1'b1;
+    #10 d=1'b1;reset=1'b0;en=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY49DFLIPFLOP.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"d:%b,reset:%b,q:%b",d,reset,q);
+    end
+endmodule

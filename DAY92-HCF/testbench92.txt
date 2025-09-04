@@ -1,0 +1,24 @@
+module tb();
+    
+    reg  [7:0]n1, n2;
+    wire [7:0]hcf;
+    
+    DAY92HCF dut(n1, n2, hcf);
+    
+    initial begin
+             n1 = 8'd15; n2 = 8'd10;
+        #100 n1 = 8'd25; n2 = 8'd10;
+        #100 n1 = 8'd9; n2 = 8'd27;
+        #100 n1 = 8'd17; n2 = 8'd130;
+        #100 n1 = 8'd12; n2 = 8'd100;
+        #100 $finish;
+    end
+    
+    initial begin
+        $dumpfile("DAY92HCF.vcd");
+        $dumpvars(0, tb);
+        $monitor($time,"n1: %d, n2:%d, hcf: %d",n1, n2, hcf);
+    end
+    
+endmodule
+

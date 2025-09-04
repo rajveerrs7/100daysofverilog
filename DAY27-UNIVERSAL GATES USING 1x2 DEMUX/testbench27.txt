@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out_nand,out_nor;
+    reg clk;
+    DAY27UNIVERSALGATES DUT(a,b,out_nand,out_nor);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1'b0; b=1'b0;
+    #10 a=1'b0; b=1'b1;
+    #10 a=1'b1; b=1'b0;
+    #10 a=1'b1; b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY27UNIVERSALGATES.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,out_nand:%b,out_nor:%b",a,b,out_nand,out_nor);
+    end
+endmodule

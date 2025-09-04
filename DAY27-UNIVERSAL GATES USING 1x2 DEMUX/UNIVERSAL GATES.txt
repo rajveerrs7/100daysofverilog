@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+module DAY27UNIVERSALGATES(
+input a,b,
+output out_nand,out_nor
+    );
+    wire [2:0]w;
+    wire w0,w1,w2,w3;
+    MUX1x2 mux_and(b,a,{w[1],w[0]});
+    MUX1x2 mux_nand(1'b1,w[1],{w[2],out_nand});
+    MUX1x2 gate(~a, b,{w1,out_nor});
+endmodule
+
+
+module MUX1x2(
+input n,sel,
+output [1:0]O
+);
+assign {O[0],O[1]}=sel?{1'b0,n}:{n,1'b0};
+endmodule

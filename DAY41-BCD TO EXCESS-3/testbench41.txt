@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]in_bcd;
+    wire [3:0]out_excess3;
+    DAY41BCDTOEXCESS3 DUT(in_bcd,out_excess3);
+    initial begin
+    #10 in_bcd=4'b1001;
+    #10 in_bcd=4'b1000;
+    #10 in_bcd=4'b0011;
+    #10 in_bcd=4'b0100;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY41BCDTOEXCESS3.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"in_bcd:%b,out_excess3:%b",in_bcd,out_excess3);
+    end
+endmodule

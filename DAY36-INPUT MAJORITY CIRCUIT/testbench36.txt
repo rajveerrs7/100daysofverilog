@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    parameter N=7;
+    reg [N-1:0]in;
+    wire out;
+    reg clk;
+    DAY36MAJORITYCIRCUIT DUT(in,out);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 in=7'b1001001;
+    #10 in=7'b1010000;
+    #10 in=7'b1001111;
+    #10 in=7'b1100011;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY36MAJORITYCIRCUIT.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"in:%b,out:%b",in,out);
+    end
+endmodule

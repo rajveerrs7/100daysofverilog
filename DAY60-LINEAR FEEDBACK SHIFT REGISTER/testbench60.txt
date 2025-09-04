@@ -1,0 +1,25 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,clk;
+    wire [7:0]LFSR;
+    DAY60LFSR DUT(clk,reset,LFSR);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 reset=1'b1;
+    #10 reset=1'b0;
+    #10 reset=1'b0;
+    #10 reset=1'b0;
+    #10 reset=1'b0;
+    #10 reset=1'b0;
+    #10 reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY60LFSR.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"reset:%b,out:%b",reset,LFSR);
+    end
+endmodule

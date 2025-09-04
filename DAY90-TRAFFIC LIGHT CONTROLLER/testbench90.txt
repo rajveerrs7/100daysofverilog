@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb();
+    reg clk, clr;
+    wire [2:0]HIGHWAY, SMALL_ROAD;
+    DAY90TRAFFIC_LIGHT_CONTROLLER dut(clk, clr, HIGHWAY, SMALL_ROAD);
+    
+    always #5 clk = ~clk;
+    
+    initial begin
+        clk = 1'b0;
+        clr = 1'b1;
+        #10 clr = 1'b0;
+        
+        #300 $finish;
+    end
+    
+    initial begin
+    $dumpfile("DAY90TRAFFIC_LIGHT_CONTROLLER.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"clr:%b, HIGHWAY:%b, SMALL_ROAD:%b",clr, HIGHWAY, SMALL_ROAD);
+    end
+endmodule

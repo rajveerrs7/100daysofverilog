@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out_xor,out_xnor;
+    reg clk;
+    DAY34SPECIALGATES DUT(a,b,out_xor,out_xnor);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1'b0; b=1'b0;
+    #10 a=1'b0; b=1'b1;
+    #10 a=1'b1; b=1'b0;
+    #10 a=1'b1; b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY33UNIGATES8x3.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,out_xor:%b,out_xnor:%b",a,b,out_xor,out_xnor);
+    end
+endmodule

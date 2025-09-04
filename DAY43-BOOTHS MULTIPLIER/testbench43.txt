@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]Q,M;
+    wire [7:0]result;
+    DAY43BOOTHSMULT DUT(Q,M,result);
+    initial begin
+    #10 Q=4;M=4;
+    #10 Q=5;M=4;
+    #10 Q=1;M=8;
+    #10 Q=6;M=7;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY43BOOTHSMULT.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"Q:%d,M:%d,result:%d",Q,M,result);
+    end
+endmodule

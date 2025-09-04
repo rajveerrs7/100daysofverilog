@@ -1,0 +1,11 @@
+`timescale 1ns / 1ps
+module DAY36MAJORITYCIRCUIT(in,out);
+    parameter N=7;
+    input [N-1:0]in;
+    output out;
+    wire [6:0]w1,w2,w3;
+    assign w1=(in[0]&in[1]|in[1]&in[2]|in[0]&in[2]);
+    assign w2=(in[3]&in[4]|in[3]&in[5]|in[4]&in[5]);
+    assign w3=in[6];
+    assign out=(w1&w2|w2&w3|w1&w3);
+endmodule

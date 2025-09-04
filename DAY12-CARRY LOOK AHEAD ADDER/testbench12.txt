@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]a,b;
+    reg cin;
+    wire [3:0]sum;
+    wire cout;
+    DAY12CLA_ADDER DUT(a,b,cin,sum,cout);
+    initial begin
+    #10 a=4'b1001;b=4'b0011;cin=1'b0;
+    #10 a=4'b1000;b=4'b1001;cin=1'b0;
+    #10 a=4'b0011;b=4'b0001;cin=1'b0;
+    #10 a=4'b0100;b=4'b1100;cin=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY12CLA_ADDER.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,cin:%b,sum:%b,cout:%b",a,b,cin,sum,cout);
+    end
+endmodule

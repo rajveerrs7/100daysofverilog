@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb();
+    reg [31:0]n;
+    wire [31:0]sq_root, cube_root;
+    DAY89SQROOT_CUBEROOT dut(n, sq_root, cube_root);
+    
+    initial begin
+        n = 32'd16;
+        #10 n = 32'd4;
+        #10 n = 32'd56;
+        #10 n = 32'd49;
+        #10 n = 32'd50;
+        #10 n = 32'd36;
+        #10 $finish;
+    end
+    
+    initial begin
+    $dumpfile("DAY89SQROOT_CUBEROOT.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"number:%d, sqrt:%d, cube_root:%d",n, sq_root, cube_root);
+    end
+endmodule

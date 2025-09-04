@@ -1,0 +1,21 @@
+`timescale 1ns / 1ps
+
+module DAY61USR(
+    input clk, reset, shift_left, shift_right,
+    input [7:0]parallel_in,
+    output [7:0]parallel_out
+    );
+    reg [7:0]data;
+    always @(posedge clk)
+    begin
+        if(reset)
+            data <= parallel_in;
+        else if(shift_left)
+            data <= {data[6:0],1'b0};
+        else if(shift_right)
+            data <= {1'b0,data[7:1]};
+        else
+            data <= parallel_in;
+    end
+    assign parallel_out = data;
+endmodule

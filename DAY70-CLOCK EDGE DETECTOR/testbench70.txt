@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,temp_clk;
+    wire positive_edge, negative_edge, dual_edge;
+    DAY70CLOCKEDGEDETECTOR DUT(clk,temp_clk,positive_edge,negative_edge,dual_edge);
+    initial begin
+    temp_clk=1'b0;
+    forever #5.5 temp_clk=~temp_clk;
+    #100 $finish;
+    end
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    #100 $finish;
+    end
+    initial begin
+    $dumpfile("DAY70CLOCKEDGEDETECTOR.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"positive_edge:%b, negative_edge:%b, dual_edge:%b",positive_edge,negative_edge,dual_edge);
+    end
+endmodule

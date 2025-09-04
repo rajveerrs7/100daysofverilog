@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+
+module DAY84EVEN_ODD(
+    input [3:0]a,
+    output reg even_odd
+    );
+    
+    parameter EVEN = 1'b1, ODD = 1'b0;
+    always @(a)
+        even_odd <= check_even_odd(a);
+    
+    function check_even_odd;
+        input [3:0]in;
+        begin
+            if(a%2 == 0)assign check_even_odd = EVEN;
+            else assign check_even_odd = ODD;
+        end
+    endfunction
+endmodule

@@ -1,0 +1,21 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg en,reset,s,r;
+    wire q;
+    DAY47SRLATCH DUT(en,reset,s,r,q);
+    initial begin
+    #10 s=1'b1;r=1'b1;reset=1'b0;en=1'b1;
+    #10 s=1'b1;r=1'b0;reset=1'b1;en=1'b0;
+    #10 s=1'b1;r=1'b0;reset=1'b0;en=1'b1;
+    #10 s=1'b0;r=1'b1;reset=1'b0;en=1'b1;
+    #10 s=1'b0;r=1'b0;reset=1'b0;en=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY47SRLATCH.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"s:%b,r:%b,reset:%b,q:%b",s,r,reset,q);
+    end
+endmodule

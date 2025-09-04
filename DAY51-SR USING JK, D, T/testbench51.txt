@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg rst,s,r,clk;
+    wire q;
+    DAY51SRUSING_JK_T_D DUT(s,r,clk,rst,Q_jk,Q_d,Q_t);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 s=1'b0;r=1'b0;rst=1'b0;
+    #10 s=1'b1;r=1'b1;rst=1'b0;
+    #10 s=1'b0;r=1'b0;rst=1'b1;
+    #10 s=1'b1;r=1'b0;rst=1'b0;
+    #10 s=1'b0;r=1'b0;rst=1'b0;
+    #10 s=1'b1;r=1'b0;rst=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY51SRUSING_JK_T_D.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"s:%b,r:%b,reset:%b,Q_jk:%b,Q_d:%b,Q_t:%b",s,r,rst,Q_jk, Q_d, Q_t);
+    end
+endmodule

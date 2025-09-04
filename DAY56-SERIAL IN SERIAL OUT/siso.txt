@@ -1,0 +1,26 @@
+`timescale 1ns / 1ps
+
+module DAY56SISO(
+    input clk, reset, serial_in,
+    output serial_out
+    );
+    wire q1,q2,q3;
+    
+    D_FF D1(clk,reset,serial_in,q1);
+    D_FF D2(clk,reset,q1,q2);
+    D_FF D3(clk,reset,q2,q3);
+    D_FF D4(clk,reset,q3,serial_out);
+    
+endmodule
+
+module D_FF(clk,reset,D,Q);
+input clk,reset,D;
+output reg Q;
+
+always @(posedge clk)
+    if(reset)
+        Q<=1'b0;
+    else
+        Q<=D;
+
+endmodule

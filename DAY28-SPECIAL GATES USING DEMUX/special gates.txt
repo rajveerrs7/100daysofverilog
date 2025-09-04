@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+module DAY28DEMUX_SPECIALGATES(
+    input a,b,
+    output out_xor,out_xnor
+    );
+    wire [3:0]w;
+    demux1_2 d1(b,a,w[0],w[1]);
+    demux1_2 d2(~b,a,w[2],w[3]);
+    assign out_xor=w[0]|w[3];
+    assign out_xnor=w[1]|w[2];
+endmodule
+
+module demux1_2(
+    input i,sel,
+    output y0,y1
+    );
+    assign y0=sel?1'b0:i;
+    assign y1=sel?i:1'b0;
+endmodule

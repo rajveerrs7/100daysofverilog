@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,T,clk;
+    wire Q_sr, Q_jk, Q_d;
+    DAY54TUSING_SR_JK_D DUT(clk,reset,T,Q_sr, Q_jk, Q_d);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 T=1'b0;reset=1'b0;
+    #10 T=1'b1;reset=1'b0;
+    #10 T=1'b0;reset=1'b1;
+    #10 T=1'b1;reset=1'b0;
+    #10 T=1'b0;reset=1'b0;
+    #10 T=1'b1;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY54TUSING_SR_JK_D.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"T:%b,reset:%b,Q_sr:%b,Q_jk:%b,Q_d:%b",T,reset,Q_sr, Q_jk, Q_d);
+    end
+endmodule

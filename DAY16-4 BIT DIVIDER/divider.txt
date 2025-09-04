@@ -1,0 +1,16 @@
+`timescale 1ns / 1ps
+module DAY16DIVISION(
+input [3:0]a,b,
+output reg [3:0]q,r
+    );
+    always @(a,b)
+    begin
+    q=0;
+    r=a;
+    while(r>=b)
+        begin
+        r=r-b;
+        q=q+1;
+        end
+    end
+endmodule

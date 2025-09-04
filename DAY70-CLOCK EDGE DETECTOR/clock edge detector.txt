@@ -1,0 +1,10 @@
+`timescale 1ns / 1ps
+
+module DAY70CLOCKEDGEDETECTOR(
+    input clk,temp_clk,
+    output positive_edge, negative_edge, dual_edge
+    );
+    assign positive_edge = clk & (~temp_clk);
+    assign negative_edge = (~clk) & temp_clk;
+    assign dual_edge = clk ^ temp_clk;
+endmodule

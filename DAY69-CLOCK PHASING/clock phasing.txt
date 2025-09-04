@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+
+module DAY69CLOCKPHASING(
+    input clk,reset,
+    output clk0, clk90, clk180, clk270
+    );
+    reg [1:0]count;
+    reg div_2;
+    always @(posedge clk)
+    if(reset)begin
+        count <= 0;
+        div_2 <= 1'b0;
+    end
+    else begin
+        count <= {~count[0],count[1]};
+        div_2 <= ~div_2;
+    end
+    
+    assign clk0 = count[1];
+    assign clk90 = count[1]^div_2;
+    assign clk180 = ~count[1];
+    assign clk270 = ~clk90;
+endmodule

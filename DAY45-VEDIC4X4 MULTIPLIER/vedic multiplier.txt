@@ -1,0 +1,50 @@
+`timescale 1ns / 1ps
+module DAY45VEDIC4X4(
+    input [3:0]a,b,
+    output [7:0]out
+    );
+    wire [3:0]w0,w1,w2,w3,w4,w5,w6;
+    wire c1,c2,c3;
+    vedic2x2 v1(a[1:0],b[1:0],w0);
+    vedic2x2 v2(a[1:0],b[3:2],w1);
+    vedic2x2 v3(a[3:2],b[1:0],w2);
+    vedic2x2 v4(a[3:2],b[3:2],w3);
+    
+    fourbitadder add1(w1,w2,w4,c1);
+    fourbitadder add2(w4,{2'b0,w0[3:2]},w5,c2);
+    fourbitadder add3(w3,{c1,1'b0,w5[3:2]},w6,c3);
+    
+    assign out[1:0]=w0[1:0];
+    assign out[3:2]=w5[1:0];
+    assign out[7:4]=w6;
+endmodule
+
+module half_adder(
+input in0,in1,
+output sum,cout
+);
+assign sum=in0^in1;
+assign cout=in0&in1;
+endmodule
+
+module vedic2x2(
+input [1:0]a,b,
+output [3:0]out
+);
+    wire [3:0]w;
+    and(out[0],a[0],b[0]);
+    and(w[0],a[0],b[1]);
+    and(w[1],a[1],b[0]);
+    and(w[2],a[1],b[1]);
+    
+    half_adder ha1(w[0],w[1],out[1],w[3]);
+    half_adder ha2(w[2],w[3],out[2],out[3]);
+endmodule
+
+module fourbitadder(
+    input [3:0]a,b,
+    output [3:0]sum,
+    output cout
+    );
+    assign {cout,sum}=a+b;
+endmodule

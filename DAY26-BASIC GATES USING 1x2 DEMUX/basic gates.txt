@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module DAY26BASICGATES(
+input a,b,
+output out_and,out_or,out_not
+    );
+    wire [1:0]w;
+    wire w0,w1,w2;
+    MUX1x2 mux_and(b,a,{out_and,w[0]});
+    MUX1x2 gate(~a, b,{w1,w0});
+    MUX1x2 not_t(1'b1, w0,{w2,out_or});
+    MUX1x2 mux_not(1'b1,a,{w[1],out_not});
+endmodule
+
+
+module MUX1x2(
+input n,sel,
+output [1:0]O
+);
+assign {O[0],O[1]}=sel?{1'b0,n}:{n,1'b0};
+endmodule

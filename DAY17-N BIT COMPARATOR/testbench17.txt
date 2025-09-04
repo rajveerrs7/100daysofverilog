@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [7:0]a,b;
+    wire lesser,greater,equal;
+    reg clk;
+    DAY17COMPARATOR DUT(a,b,lesser,greater,equal);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=5; b=3;
+    #10 a=5; b=2;
+    #10 a=6; b=6;
+    #10 a=3; b=6;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY17COMPARATOR.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,b:%d,greater:%b,lesser:%b,equal:%b",a,b,greater,lesser,equal);
+    end
+endmodule

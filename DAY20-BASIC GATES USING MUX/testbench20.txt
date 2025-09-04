@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out_and,out_or,out_not;
+    reg clk;
+    DAY20BASICGATES DUT(a,b,out_and,out_or,out_not);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1'b0; b=1'b0;
+    #10 a=1'b0; b=1'b1;
+    #10 a=1'b1; b=1'b0;
+    #10 a=1'b1; b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY20BASICGATES.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,s:%b,and:%b,or:%b,not:%b",a,b,out_and,out_or,out_not);
+    end
+endmodule

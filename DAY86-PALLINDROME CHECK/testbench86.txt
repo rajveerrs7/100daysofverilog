@@ -1,0 +1,31 @@
+`timescale 1ns / 1ps
+module tb();
+    reg [15:0]number;
+    wire pallindrome;
+    DAY86PALLINDROME_CHECK dut(number,pallindrome);
+    
+    initial begin
+      number=16'd18681;
+      #10;
+      number=16'd3453;
+      #10;
+      number=16'd14441;
+      #10;
+      number=16'd51125;
+      #10;
+      number=16'd12021;
+      #10;
+      number=16'd35153;
+      #10;
+      number=16'd8998;
+      #10;
+      number=16'd6196;
+      #10;
+      $finish;
+    end
+    initial begin
+    $dumpfile("DAY86PALLINDROME_CHECK.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"number:%d, pallindrome:%b",number, pallindrome);
+    end
+endmodule

@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb();
+    reg [7:0]a, b;
+    reg [3:0]sel;
+    wire [15:0]result;
+    wire e_bit;
+    DAY83ALU dut(a, b, sel, result, e_bit);
+    
+    initial begin
+      a = 8'd15;
+      b = 8'd3;
+      sel = 0;
+    end
+    always #20 sel = sel+1;
+    initial begin
+    $dumpfile("DAY83ALU.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d, b:%d, select line:%d, result:%d, e_bit: %b",a, b, sel, result, e_bit);
+    end
+endmodule

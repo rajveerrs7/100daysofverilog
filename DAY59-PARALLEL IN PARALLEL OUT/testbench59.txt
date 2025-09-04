@@ -1,0 +1,28 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,clk;
+    reg [3:0]parallel_in;
+    wire [3:0]parallel_out;
+    DAY56PIPO DUT(clk,reset,parallel_in,parallel_out);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 parallel_in=4'b0000;reset=1'b0;
+    #10 parallel_in=4'b0011;reset=1'b0;
+    #10 parallel_in=4'b0100;reset=1'b1;
+    #10 parallel_in=4'b0111;reset=1'b0;
+    #10 parallel_in=4'b1000;reset=1'b0;
+    #10 parallel_in=4'b1011;reset=1'b0;
+    #10 parallel_in=4'b1100;reset=1'b0;
+    #10 parallel_in=4'b1111;reset=1'b0;
+    #10 parallel_in=4'b1000;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY56PIPO.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"parallel_in:%b,reset:%b,parallel_out:%b",parallel_in,reset,parallel_out);
+    end
+endmodule

@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [7:0]a;
+    wire [2:0]out;
+    reg clk;
+    DAY29ENCODER8x3 DUT(a,out);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=8'b00001000;
+    #10 a=8'b01000000;
+    #10 a=8'b10000000;
+    #10 a=8'b00100000; 
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY29ENCODER8x3.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,out:%b",a,out);
+    end
+endmodule

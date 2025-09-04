@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,J,K,clk;
+    wire Q_sr, Q_d, Q_t;
+    DAY52JKUSING_SR_D_T DUT(J,K,clk,reset,Q_sr, Q_d, Q_t);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 J=1'b0;K=1'b0;reset=1'b0;
+    #10 J=1'b1;K=1'b1;reset=1'b0;
+    #10 J=1'b0;K=1'b0;reset=1'b1;
+    #10 J=1'b1;K=1'b0;reset=1'b0;
+    #10 J=1'b0;K=1'b0;reset=1'b0;
+    #10 J=1'b1;K=1'b0;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY52JKUSING_SR_D_T.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"J:%b,K:%b,reset:%b,Q_sr:%b,Q_d:%b,Q_t:%b",J,K,reset,Q_sr, Q_d, Q_t);
+    end
+endmodule

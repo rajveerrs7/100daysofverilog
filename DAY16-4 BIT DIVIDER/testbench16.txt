@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]a,b;
+    wire [3:0]q,r;
+    reg clk;
+    DAY16DIVISION DUT(a,b,q,r);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=5; b=3;
+    #10 a=5; b=2;
+    #10 a=6; b=3;
+    #10 a=4; b=1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY16DIVISION.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,b:%d,q:%d,r:%d",a,b,q,r);
+    end
+endmodule

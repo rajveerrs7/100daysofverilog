@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+
+module DAY71FREQDIVIDE_4(
+    input clk, reset,
+    output clkby4
+    );
+    wire clkby2;
+    DFF D1(clk, reset, ~clkby4, clkby2);
+    DFF D2(clk, reset,  clkby2, clkby4);
+endmodule
+
+
+module DFF(
+input clk, reset, D,
+output reg Q
+);
+always @(posedge clk)
+    if(reset)
+        Q <= 1'b0;
+    else
+        Q <= D;
+endmodule

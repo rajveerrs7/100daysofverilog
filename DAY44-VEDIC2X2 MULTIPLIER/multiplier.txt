@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module DAY44VEDIC2X2(
+    input [1:0]a,b,
+    output [3:0]out
+    );
+    wire [3:0]w;
+    and(out[0],a[0],b[0]);
+    and(w[0],a[0],b[1]);
+    and(w[1],a[1],b[0]);
+    and(w[2],a[1],b[1]);
+    
+    half_adder ha1(w[0],w[1],out[1],w[3]);
+    half_adder ha2(w[2],w[3],out[2],out[3]);
+endmodule
+
+module half_adder(
+input in0,in1,
+output sum,cout
+);
+assign sum=in0^in1;
+assign cout=in0&in1;
+endmodule

@@ -1,0 +1,23 @@
+module DAY89SQROOT_CUBEROOT(
+    input  [31:0]  a,
+    output reg [31:0] sq_root, cube_root
+    );
+    
+    always @(a)begin
+        sqrt_calc(a, sq_root);
+        cubert_calc(a, cube_root);
+    end
+    
+    task sqrt_calc;
+        input [31:0]in;
+        output [31:0]out;
+        out = in**(0.5);
+    endtask
+    
+    task cubert_calc;
+        input [31:0]in;
+        output [31:0]out;
+        out = in**0.33;
+    endtask
+
+endmodule

@@ -1,0 +1,65 @@
+`timescale 1ns / 1ps
+
+module DAY73FREQDIVIDE(
+    input clk, reset,
+    output clk_out
+    );
+    
+    wire [1:0]Q;
+    wire temp, temp1, clkby3;
+    
+    mod3counter M1(clk, reset, Q);
+    DFF D1(~clk, reset, Q[1], temp);
+    or(clkby3, temp, Q[1]);
+    
+    DUALEDGE_DFF D2(clk, reset, clkby3, temp1);
+    xor(clk_out, temp1, clkby3);
+endmodule
+
+
+module DFF(
+input clk, reset, D,
+output reg Q
+);
+always @(posedge clk)
+    if(reset)
+        Q <= 1'b0;
+    else
+        Q <= D;
+endmodule
+
+module mod3counter(
+input clk, reset,
+output reg [1:0]count
+);
+always @(posedge clk)
+    if(reset)
+        count <= 2'b00;
+    else
+        if(count == 2)
+            count <= 2'b00;
+        else
+            count <= count+1;
+endmodule
+
+module DUALEDGE_DFF(
+    input clk, reset, d,
+    output q
+    );
+    reg q1, q2;
+    
+    assign q = clk ? q1 : q2;
+    
+    always@ (posedge clk)
+        begin
+            if(reset) q1<= 1'b0;
+            q1 <= d;
+        end
+    
+    always@ (negedge clk)
+        begin
+            if(reset) q2<= 1'b0;
+            q2 <= d; 
+        end
+
+endmodule

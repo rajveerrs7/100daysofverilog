@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+module DAY32BASICGATES8x3(
+input a,b,
+output out_and,out_or,out_not
+    );
+    wire [3:0]w_and,w_or,w_not;
+    DECODER4x2 andg({a,b},w_and);
+    DECODER4x2 org({a,b},w_or);
+    DECODER4x2 notg({a,1'b1},w_not);
+    assign out_and=w_and[3];
+    assign out_or=~w_or[3];
+    assign out_not=w_not[1];
+endmodule
+
+
+module DECODER4x2(
+input [1:0]in,
+output reg [3:0]out
+);
+always @(in)
+    begin
+        case(in)
+            2'b00:out=4'b0001;
+            2'b01:out=4'b0010;
+            2'b10:out=4'b0100;
+            2'b11:out=4'b1000;
+        endcase
+    end
+endmodule

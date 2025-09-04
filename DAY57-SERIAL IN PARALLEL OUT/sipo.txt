@@ -1,0 +1,25 @@
+`timescale 1ns / 1ps
+
+module DAY56SIPO(
+    input clk, reset, serial_in,
+    output [3:0]parallel_out
+    );
+    
+    D_FF D1(clk,reset,serial_in,serial_out[3]);
+    D_FF D2(clk,reset,parallel_out[3],parallel_out[2]);
+    D_FF D3(clk,reset,parallel_out[2],parallel_out[1]);
+    D_FF D4(clk,reset,parallel_out[1],parallel_out[0]);
+    
+endmodule
+
+module D_FF(clk,reset,D,Q);
+input clk,reset,D;
+output reg Q;
+
+always @(posedge clk)
+    if(reset)
+        Q<=1'b0;
+    else
+        Q<=D;
+
+endmodule

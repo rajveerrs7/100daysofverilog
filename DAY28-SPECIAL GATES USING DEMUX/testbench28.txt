@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out_xor,out_xnor;
+    DAY28DEMUX_SPECIALGATES DUT(a,b,out_xor,out_xnor);
+    initial begin
+    #10 a=1'b0;b=1'b0;
+    #10 a=1'b0;b=1'b1;
+    #10 a=1'b1;b=1'b0;
+    #10 a=1'b1;b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY28DEMUX_SPECIALGATES.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,out_xor:%b,out_xnor:%b",a,b,out_xor,out_xnor);
+    end
+endmodule

@@ -1,0 +1,7 @@
+`timescale 1ns / 1ps
+module DAY18MUX(
+input a,b,s,
+output out
+    );
+    assign out=s?b:a;
+endmodule

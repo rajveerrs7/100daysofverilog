@@ -1,0 +1,27 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,serial_in,clk;
+    wire [3:0]parallel_out;
+    DAY56SIPO DUT(clk,reset,serial_in,parallel_out);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b1;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY56SIPO.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"serial_in:%b,reset:%b,parallel_out:%b",serial_in,reset,parallel_out);
+    end
+endmodule

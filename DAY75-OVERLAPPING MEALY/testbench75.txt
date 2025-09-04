@@ -1,0 +1,42 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,reset,din;
+    wire out;
+    wire [3:0]state;
+    DAY75FSM DUT(clk, reset, din, state, out);
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    end
+    initial begin
+    reset = 1'b1;
+    #10;
+    reset = 1'b0;
+    
+    #5 din= 1'b0;
+    #10 din= 1'b1;
+    #10 din= 1'b1;
+    #10 din= 1'b0;
+    #10 din= 1'b0;
+    #10 din= 1'b1;
+    #10 din= 1'b1;
+    #10 din= 1'b0;
+    #10 din= 1'b0;
+    #10 din= 1'b1;
+    #10 din= 1'b0;
+    #10 din= 1'b1;
+    #10 din= 1'b1;
+    #10 din= 1'b0;
+    #10 din= 1'b0;
+    #10 din= 1'b1;
+    
+    $finish;
+    end
+    initial begin
+    $dumpfile("DAY75FSM.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"state:%b, detected:%b",state, out);
+    end
+endmodule

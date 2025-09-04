@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+module DAY22SPECIALGATES(
+input a,b,
+output out_xor,out_xnor
+    );
+    wire bbar;
+    MUX2x1 mux_not({1'b0,1'b1},b,bbar);
+    MUX2x1 mux_xor({bbar,b},a,out_xor);
+    MUX2x1 mux_xnor({b,bbar},a,out_xnor);
+endmodule
+
+
+module MUX2x1(
+input [1:0]in,
+input sel,
+output out
+);
+assign out=sel?in[1]:in[0];
+endmodule

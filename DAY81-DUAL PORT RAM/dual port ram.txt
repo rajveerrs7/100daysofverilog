@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+
+module DAY81DUALPORT_RAM
+    #(parameter
+    addr_width = 4,
+    data_width = 8,
+    depth = 16
+    )
+    (
+    input clk, we, en_p1, en_p2,
+    input [data_width-1:0]data_in,
+    input [addr_width-1:0]addr_p1, addr_p2,
+    output [data_width-1:0]data_p1, data_p2
+    );
+    
+    reg [data_width-1:0]ram[depth-1:0];
+    
+    always @(posedge clk)
+        if(we && en_p1)
+            ram[addr_p1] <= data_in;
+            
+    assign data_p1 = en_p1?ram[addr_p1]:1'dz;
+    assign data_p2 = en_p2?ram[addr_p2]:1'dz;
+endmodule

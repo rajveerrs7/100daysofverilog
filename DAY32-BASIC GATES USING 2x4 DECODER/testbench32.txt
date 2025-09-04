@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b;
+    wire out_and,out_or,out_not;
+    reg clk;
+    DAY32BASICGATES8x3 DUT(a,b,out_and,out_or,out_not);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1'b0; b=1'b0;
+    #10 a=1'b0; b=1'b1;
+    #10 a=1'b1; b=1'b0;
+    #10 a=1'b1; b=1'b1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY32BASICGATES8x3.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,out_and:%b,out_or:%b,out_not:%b",a,b,out_and,out_or,out_not);
+    end
+endmodule

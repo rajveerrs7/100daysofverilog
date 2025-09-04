@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,D,clk;
+    wire Q;
+    DAY55DUALEDGE_FF DUT(clk,reset,D,Q);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 D=1'b0;reset=1'b0;
+    #10 D=1'b1;reset=1'b0;
+    #10 D=1'b0;reset=1'b1;
+    #10 D=1'b1;reset=1'b0;
+    #10 D=1'b0;reset=1'b0;
+    #10 D=1'b1;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY55DUALEDGE_FF.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"D:%b,reset:%b,Q:%b",D,reset,Q);
+    end
+endmodule

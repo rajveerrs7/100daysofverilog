@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [1:0]a,b;
+    wire [3:0]out;
+    DAY44VEDIC2X2 DUT(a,b,out);
+    initial begin
+    #10 a=2;b=1;
+    #10 a=1;b=1;
+    #10 a=2;b=2;
+    #10 a=1;b=3;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY44VEDIC2X2.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,b:%d,out:%d",a,b,out);
+    end
+endmodule

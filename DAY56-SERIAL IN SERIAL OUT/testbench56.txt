@@ -1,0 +1,27 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,serial_in,clk;
+    wire serial_out;
+    DAY56SISO DUT(clk,reset,serial_in,serial_out);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b1;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 serial_in=1'b0;reset=1'b0;
+    #10 serial_in=1'b1;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY56SISO.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"serial_in:%b,reset:%b,serial_out:%b",serial_in,reset,serial_out);
+    end
+endmodule

@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+
+module DAY55DUALEDGE_FF(
+    input clk, reset, D,
+    output Q
+    );
+    reg q1,q2;
+    
+    always @(posedge clk)
+    if(reset)
+        q1<=1'b0;
+    else
+        q1<=D;
+    
+    always @(negedge clk)
+    if(reset)
+        q2<=1'b0;
+    else
+        q2<=D;
+    
+    assign Q=clk?q1:q2;
+    
+endmodule

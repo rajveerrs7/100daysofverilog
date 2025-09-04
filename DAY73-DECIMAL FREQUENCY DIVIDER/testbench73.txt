@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,reset;
+    wire clk_out;
+    DAY73FREQDIVIDE DUT(clk, reset, clk_out);
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    end
+    initial begin
+    reset = 1'b1;
+    #10;
+    reset = 1'b0;
+    #200 $finish;
+    end
+    initial begin
+    $dumpfile("DAY73FREQDIVIDE.vcd");
+    $dumpvars(0,tb);
+    end
+endmodule

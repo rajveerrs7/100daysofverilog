@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]binary;
+    wire [3:0]gray;
+    DAY37BINARYTOGRAY DUT(binary,gray);
+    initial begin
+    #10 binary=4'b1001;
+    #10 binary=4'b1010;
+    #10 binary=4'b1001;
+    #10 binary=4'b1100;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY37BINARYTOGRAY.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"binary:%b,gray:%b",binary,gray);
+    end
+endmodule

@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module DAY25DEMUX1x8(
+input a,
+input [2:0]s,
+output [7:0]out
+    );
+    wire [5:0]w;
+    MUX1x2 mux0(a,s[2],w[1:0]);
+    MUX1x2 mux1(w[0],s[1],w[3:2]);
+    MUX1x2 mux2(w[1],s[1],w[5:4]);
+    MUX1x2 mux3(w[2],s[0],out[1:0]);
+    MUX1x2 mux4(w[3],s[0],out[3:2]);
+    MUX1x2 mux5(w[4],s[0],out[5:4]);
+    MUX1x2 mux6(w[5],s[0],out[7:6]);
+endmodule
+
+
+module MUX1x2(
+input n,sel,
+output [1:0]O
+);
+assign {O[0],O[1]}=sel?{1'b0,n}:{n,1'b0};
+endmodule

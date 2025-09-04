@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module DAY23FA_MUX(
+    input a,b,cin,
+    output sum,cout
+    );
+    wire [4:0]w;
+    mux2_1 m1({1'b0,1'b1},b,w[0]);
+    mux2_1 m2({w[0],b},a,w[1]);
+    mux2_1 m3({1'b0,1'b1},cin,w[2]);
+    mux2_1 m4({w[2],cin},w[1],sum);
+    
+    mux2_1 m5({cin,1'b0},w[1],w[3]);
+    mux2_1 m6({b,1'b0},a,w[4]);
+    mux2_1 m7({w[4],w[3]},w[4],cout);
+endmodule
+
+module mux2_1(
+    input [1:0]i,
+    input sel,
+    output y_out    
+    );
+    assign y_out=sel?i[1]:i[0];
+endmodule

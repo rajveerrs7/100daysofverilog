@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    parameter N=4;
+    reg [N-1:0]a;
+    wire [2*N-1:0]out;
+    reg clk;
+    DAY35NBITSQUARE DUT(a,out);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=4;
+    #10 a=5;
+    #10 a=6;
+    #10 a=7;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY35NBITSQUARE.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,out:%d",a,out);
+    end
+endmodule

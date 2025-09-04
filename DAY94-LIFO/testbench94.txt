@@ -1,0 +1,41 @@
+`timescale 1ns / 1ps
+
+module tb();
+
+    reg clk, rst, rd_en, wr_en;
+    reg [7:0]data_in;
+    wire [7:0]data_out;
+    wire empty, full;
+    
+    LIFO dut(wr_en, rd_en, clk, rst, data_in, empty, full, data_out);
+    
+    always #5 clk = ~clk;
+    
+    initial begin
+        clk = 1'b0;
+        #10 rst = 1'b1;
+        #10 rst = 1'b0;
+        
+        #10 wr_en = 1'b1; rd_en = 1'b0; data_in = 8'd5;
+        #10 wr_en = 1'b1; rd_en = 1'b0; data_in = 8'd6;
+        #10 wr_en = 1'b1; rd_en = 1'b0; data_in = 8'd7;
+        #10 wr_en = 1'b1; rd_en = 1'b0; data_in = 8'd8;
+        #10 wr_en = 1'b1; rd_en = 1'b0; data_in = 8'd9;
+        
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        #10 rd_en = 1'b1; wr_en = 1'b0;
+        
+        #10 $finish;
+    end
+    
+    initial begin
+        $dumpfile("LIFO.vcd");
+        $dumpvars(0,tb);
+        $monitor("wr_en:%b, rd_en:%b, empty:%b, full:%b, data_in:%d, data_out:%d",wr_en, rd_en, empty, full, data_in, data_out);
+    end
+
+endmodule

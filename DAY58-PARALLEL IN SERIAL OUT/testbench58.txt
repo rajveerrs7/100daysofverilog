@@ -1,0 +1,28 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg reset,clk,load;
+    reg [2:0]parallel_in;
+    wire serial_out;
+    DAY56PISO DUT(clk,reset,load,parallel_in,serial_out);
+    always #5 clk=~clk;
+    initial begin
+    clk=0;
+    #10 parallel_in=3'b000;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b001;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b010;reset=1'b1;load=1'b1;
+    #10 parallel_in=3'b011;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b100;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b101;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b110;reset=1'b0;load=1'b0;
+    #10 parallel_in=3'b111;reset=1'b0;load=1'b1;
+    #10 parallel_in=3'b100;reset=1'b0;load=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY56PISO.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"parallel_in:%b,reset:%b,serial_out:%b",parallel_in,reset,serial_out);
+    end
+endmodule

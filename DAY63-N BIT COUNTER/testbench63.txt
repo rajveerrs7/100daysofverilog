@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    parameter N=3;
+    reg clk,reset;
+    wire [N-1:0]counter;
+    DAY63NBITCOUNTER DUT(clk,reset,counter);
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    end
+    initial begin
+    reset=1'b1;
+    #12 reset=1'b0;
+    #300 $finish;
+    end
+    initial begin
+    $dumpfile("DAY63NBITCOUNTER.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"reset:%b,counter:%d",reset,counter);
+    end
+endmodule

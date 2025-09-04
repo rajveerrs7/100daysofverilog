@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module DAY11ADDERSUBTRACTOR(
+input [3:0]a,b,
+input cin,
+output [3:0]out,
+output cout
+    );
+    wire w1,w2,w3;
+    FA fa1(a[0],b[0]^cin,cin,w1,out[0]);
+    FA fa2(a[1],b[1]^cin,w1,w2,out[1]);
+    FA fa3(a[2],b[2]^cin,w2,w3,out[2]);
+    FA fa4(a[3],b[3]^cin,w3,cout,out[3]);
+endmodule
+
+
+module FA(
+input x,y,z,
+output p,q
+);
+assign q=x^y^z;
+assign p=x&y|y&z|x&z;
+endmodule

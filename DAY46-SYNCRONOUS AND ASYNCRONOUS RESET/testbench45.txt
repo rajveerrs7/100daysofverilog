@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,reset,in;
+    wire sync_out,async_out;
+    DAY46SYNCASYNCRESET DUT(clk,reset,in,sync_out,async_out);
+    always #5 clk=~clk;
+    initial begin
+    clk=1'b0;
+    #10 in=1'b1;reset=1'b0;
+    #10 in=1'b1;reset=1'b1;
+    #10 in=1'b1;reset=1'b0;
+    #10 in=1'b1;reset=1'b0;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY46SYNCASYNCRESET.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"in:%b,sync_out:%b,async_out:%b",in,sync_out,async_out);
+    end
+endmodule

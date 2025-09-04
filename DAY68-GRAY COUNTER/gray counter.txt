@@ -1,0 +1,17 @@
+`timescale 1ns / 1ps
+
+module DAY68GRAYCOUNTER(
+    input clk,reset,
+    output reg [3:0]gray_counter
+    );
+    reg [3:0]counter;
+    always @(posedge clk)
+    if(reset)begin
+        gray_counter <= 4'b0000;
+        counter <= 4'b0000;
+    end
+    else begin
+        counter <= counter+1;
+        gray_counter <= {counter[3],counter[3]^counter[2],counter[2]^counter[1],counter[1]^counter[0]};
+    end
+endmodule

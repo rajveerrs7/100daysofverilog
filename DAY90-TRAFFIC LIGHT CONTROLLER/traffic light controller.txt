@@ -1,0 +1,72 @@
+module DAY90TRAFFIC_LIGHT_CONTROLLER(
+    input  clk, clr,
+    output reg [2:0] HIGHWAY, SMALL_ROAD
+    );
+    
+    // timing parameters
+    parameter G2YDELAY = 3, 
+              R2GDELAY = 2; 
+
+    // light encodings
+    parameter RED    = 3'b100, 
+              GREEN  = 3'b010, 
+              YELLOW = 3'b001;
+
+    // FSM states
+    parameter S0 = 2'b00,   // Highway Green, Small road Red
+              S1 = 2'b01,   // Highway Yellow, Small road Red
+              S2 = 2'b10,   // Highway Red, Small road Green
+              S3 = 2'b11;   // Highway Red, Small road Yellow
+    
+    reg [1:0] state, next_state;
+    reg [3:0] counter; // 4-bit counter for delays
+
+    // Sequential block for state + counter update
+    always @(posedge clk or posedge clr) begin
+        if (clr) begin
+            state   <= S0;
+            counter <= 0;
+        end else begin
+            state   <= next_state;
+            counter <= (state != next_state) ? 0 : counter + 1;
+        end
+    end
+
+    // Next state logic
+    always @(*) begin
+        case (state)
+            S0: next_state = (counter == G2YDELAY) ? S1 : S0;
+            S1: next_state = (counter == R2GDELAY) ? S2 : S1;
+            S2: next_state = (counter == G2YDELAY) ? S3 : S2;
+            S3: next_state = (counter == R2GDELAY) ? S0 : S3;
+            default: next_state = S0;
+        endcase
+    end
+
+    // Output logic (Moore FSM)
+    always @(*) begin
+        case(state)
+            S0: begin
+                HIGHWAY    = GREEN;
+                SMALL_ROAD = RED;
+            end
+            S1: begin
+                HIGHWAY    = YELLOW;
+                SMALL_ROAD = RED;
+            end
+            S2: begin
+                HIGHWAY    = RED;
+                SMALL_ROAD = GREEN;
+            end
+            S3: begin
+                HIGHWAY    = RED;
+                SMALL_ROAD = YELLOW;
+            end
+            default: begin
+                HIGHWAY    = RED;
+                SMALL_ROAD = RED;
+            end
+        endcase
+    end
+
+endmodule

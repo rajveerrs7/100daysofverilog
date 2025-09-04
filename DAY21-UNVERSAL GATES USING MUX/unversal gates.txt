@@ -1,0 +1,19 @@
+`timescale 1ns / 1ps
+module DAY21UNIGATES(
+input a,b,
+output out_nand,out_nor
+    );
+    wire bbar;
+    MUX2x1 mux_not({1'b0,1'b1},b,bbar);
+    MUX2x1 mux_nand({bbar,1'b1},a,out_nand);
+    MUX2x1 mux_nor({1'b0,bbar},a,out_nor);
+endmodule
+
+
+module MUX2x1(
+input [1:0]in,
+input sel,
+output out
+);
+assign out=sel?in[1]:in[0];
+endmodule

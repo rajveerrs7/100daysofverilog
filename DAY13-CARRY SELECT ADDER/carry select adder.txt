@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+module DAY13CSADDER(
+    input [3:0]a,b,
+    input cin,
+    output [3:0]sum,
+    output cout
+    );
+    wire [16:0]w;
+    full_adder fa1(a[0],b[0],1'b0,w[4],w[0]);
+    full_adder fa2(a[1],b[1],w[0],w[5],w[1]);
+    full_adder fa3(a[2],b[2],w[1],w[6],w[2]);
+    full_adder fa4(a[3],b[3],w[2],w[7],w[3]);
+    
+    full_adder fa5(a[0],b[0],1'b1,w[12],w[8]);
+    full_adder fa6(a[1],b[1],w[8],w[13],w[9]);
+    full_adder fa7(a[2],b[2],w[9],w[14],w[10]);
+    full_adder fa8(a[3],b[3],w[10],w[15],w[11]);
+    
+    mux m1(w[4],w[12],cin,sum[0]);
+    mux m2(w[5],w[13],cin,sum[1]);
+    mux m3(w[6],w[14],cin,sum[2]);
+    mux m4(w[7],w[15],cin,sum[3]);
+    mux m5(w[3],w[11],cin,cout);
+endmodule
+
+
+module full_adder(
+input in0,in1,c,
+output s,cout
+);
+assign s=in0^in1^c;
+assign cout=in0&in1|in1&c|in0&c;
+endmodule
+
+module mux(
+input in0,in1,sel,
+output out
+);
+assign out=sel?in1:in0;
+endmodule

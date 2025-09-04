@@ -1,0 +1,23 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg a,b,s;
+    wire out;
+    reg clk;
+    DAY18MUX DUT(a,b,s,out);
+    always #5 clk=~clk;
+    initial begin
+    #5 clk=1'b0;
+    #10 a=1; b=0; s=0;
+    #10 a=1; b=0; s=1;
+    #10 a=0; b=1; s=0;
+    #10 a=0; b=1; s=1;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY18MUX.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%b,b:%b,s:%b,out:%b",a,b,s,out);
+    end
+endmodule

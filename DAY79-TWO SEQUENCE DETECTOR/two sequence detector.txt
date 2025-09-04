@@ -1,0 +1,91 @@
+`timescale 1ns / 1ps
+
+module DAY79FSM(
+    input clk, reset, in, 
+    output reg [3:0]state,
+    output reg out
+    );
+    
+    reg [3:0]next_state;
+    parameter [3:0]IDLE   = 4'b0001,
+                   STATE1 = 4'b0010,
+                   STATE2 = 4'b0011,
+                   STATE3 = 4'b0100,
+                   STATE4 = 4'b0101,
+                   STATE5 = 4'b0110;
+                   
+    always @(*)
+        begin
+            case(state)
+                IDLE : begin
+                    if(in)begin
+                        next_state <= STATE1;
+                        out <= 1'b0;
+                    end
+                    else begin
+                        next_state <= STATE2;
+                        out <= 1'b0;
+                    end
+                end
+                STATE1 : begin
+                    if(in)begin
+                        next_state <= STATE1;
+                        out <= 1'b0;
+                    end
+                    else begin
+                        next_state <= STATE3;
+                        out <= 1'b0;
+                    end
+                end
+                STATE2 : begin
+                    if(in)begin
+                        next_state <= STATE4;
+                        out <= 1'b0;
+                    end
+                    else begin
+                        next_state <= STATE2;
+                        out <= 1'b0;
+                    end
+                end
+                STATE3 : begin
+                    if(in)begin
+                        next_state <= STATE4;
+                        out <= 1'b1;
+                    end
+                    else begin
+                        next_state <= STATE2;
+                        out <= 1'b0;
+                    end
+                end
+                STATE4 : begin
+                    if(in)begin
+                        next_state <= STATE5;
+                        out <= 1'b0;
+                    end
+                    else begin
+                        next_state <= STATE3;
+                        out <= 1'b0;
+                    end
+                end
+                STATE5 : begin
+                    if(in)begin
+                        next_state <= STATE1;
+                        out <= 1'b0;
+                    end
+                    else begin
+                        next_state <= STATE3;
+                        out <= 1'b1;
+                    end
+                end
+                default : next_state <= IDLE;
+            endcase
+        end
+        
+        always @(posedge clk)
+        if(reset)
+            state <= 4'b0000;
+        else
+            state <= next_state;
+        
+        
+endmodule

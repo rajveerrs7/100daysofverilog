@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg clk,reset;
+    wire [3:0]gray_counter;
+    DAY68GRAYCOUNTER DUT(clk,reset,gray_counter);
+    initial begin
+    clk=1'b0;
+    forever #5 clk=~clk;
+    end
+    initial begin
+    reset=1'b1;
+    #12 reset=1'b0;
+    #100 $finish;
+    end
+    initial begin
+    $dumpfile("DAY68GRAYCOUNTER.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"reset:%b,counter:%b",reset,gray_counter);
+    end
+endmodule

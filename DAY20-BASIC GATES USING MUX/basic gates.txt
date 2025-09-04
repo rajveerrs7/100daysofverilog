@@ -1,0 +1,18 @@
+`timescale 1ns / 1ps
+module DAY20BASICGATES(
+input a,b,
+output out_and,out_or,out_not
+    );
+    MUX2x1 mux_and({b,1'b0},a,out_and);
+    MUX2x1 mux_or({1'b1,a},b,out_or);
+    MUX2x1 mux_not({1'b0,1'b1},a,out_not);
+endmodule
+
+
+module MUX2x1(
+input [1:0]in,
+input sel,
+output out
+);
+assign out=sel?in[1]:in[0];
+endmodule

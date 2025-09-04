@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]BCD;
+    wire [6:0]segment7;
+    DAY42BCDTO7SEGMENT DUT(BCD,segment7);
+    initial begin
+    #10 BCD=4'b1001;
+    #10 BCD=4'b1000;
+    #10 BCD=4'b0011;
+    #10 BCD=4'b0100;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY42BCDTO7SEGMENT.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"BCD:%b,7SEGMENT:%b",BCD,segment7);
+    end
+endmodule

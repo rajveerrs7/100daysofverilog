@@ -1,0 +1,17 @@
+`timescale 1ns / 1ps
+module DAY50TFLIPFLOP(
+    input en,reset,t,clk,
+    output reg q
+    );
+    always @(posedge clk)
+    begin
+        if(reset)
+            q<=1'b0;
+        else if(en) begin
+            case(t)
+                1'b0:q<=q;
+                1'b1:q<=~q;
+            endcase
+        end
+    end
+endmodule

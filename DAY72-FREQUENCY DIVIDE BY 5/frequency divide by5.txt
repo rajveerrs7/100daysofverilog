@@ -1,0 +1,38 @@
+`timescale 1ns / 1ps
+
+module DAY72FREQDIVIDE_5(
+    input clk, reset,
+    output clkby5
+    );
+    wire [2:0]Q;
+    wire temp;
+    mod5counter M1(clk, reset, Q);
+    DFF D1(~clk, reset, Q[1], temp);
+    or(clkby5, temp, Q[1]);
+endmodule
+
+
+module DFF(
+input clk, reset, D,
+output reg Q
+);
+always @(posedge clk)
+    if(reset)
+        Q <= 1'b0;
+    else
+        Q <= D;
+endmodule
+
+module mod5counter(
+input clk, reset,
+output reg [2:0]count
+);
+always @(posedge clk)
+    if(reset)
+        count <= 3'b000;
+    else
+        if(count == 4)
+            count <= 0;
+        else
+            count <= count+1;
+endmodule

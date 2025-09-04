@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [7:0]data;
+    reg [2:0]amt;
+    wire [7:0]out;
+    DAY62BARRELSHIFTER DUT(amt,data,out);
+    
+    initial begin
+    data=8'b00000001; amt=3'b010;
+    #5 data=8'b00000011; amt=3'b110;
+    #5 data=8'b00000111; amt=3'b001;
+    end
+    initial begin
+    $dumpfile("DAY62BARRELSHIFTER.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"data:%b,amt:%b,out:%b",data,amt,out);
+    end
+endmodule

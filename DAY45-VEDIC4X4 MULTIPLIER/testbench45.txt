@@ -1,0 +1,20 @@
+`timescale 1ns / 1ps
+module tb(
+
+    );
+    reg [3:0]a,b;
+    wire [7:0]out;
+    DAY45VEDIC4X4 DUT(a,b,out);
+    initial begin
+    #10 a=5;b=6;
+    #10 a=7;b=4;
+    #10 a=3;b=2;
+    #10 a=7;b=3;
+    #10 $finish;
+    end
+    initial begin
+    $dumpfile("DAY45VEDIC4X4.vcd");
+    $dumpvars(0,tb);
+    $monitor($time,"a:%d,b:%d,out:%d",a,b,out);
+    end
+endmodule
